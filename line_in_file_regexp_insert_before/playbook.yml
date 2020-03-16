@@ -1,0 +1,27 @@
+---
+- name: "[DAVID]"
+  hosts: all
+  tasks:
+
+    - name: "[DAVID] - copie du fichier"
+      copy:
+        src: ./monfichier.txt
+        dest: /tmp/david.txt
+
+    - name: "[DAVID] - add pierre"
+      lineinfile:
+        path: /tmp/david.txt
+        line: 'et moi je suis pierre'
+
+    - name: "[DAVID] - Replace xavki for paul "
+      lineinfile:
+        path: /tmp/david.txt
+        regexp: '(.*)david(.*)'
+        line: '\1paul\2'
+        backrefs: yes
+
+    - name: "[DAVID] - Replace xavki for paul "
+      lineinfile:
+        path: /tmp/david.txt
+        insertbefore: '(.*)xavki(.*)'
+        line: "mon prenom c'est toto"

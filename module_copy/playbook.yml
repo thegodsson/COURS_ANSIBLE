@@ -1,0 +1,8 @@
+---
+- name: "[DAVID]"
+  hosts: all
+  tasks:
+    - name: "[DAVID] - copie du fichier"
+      copy:
+        src: ./monfichier.txt
+        dest: /tmp/david.txt

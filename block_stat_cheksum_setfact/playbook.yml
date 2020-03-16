@@ -1,0 +1,42 @@
+---
+- name: "[DAVID]"
+  hosts: all
+  vars:
+    - check5: "6e8b118fefef5becd565d4fafb9b3833"
+  tasks:
+
+
+
+    - name: "[DAVID] - check md5"
+      stat:
+        path: /tmp/david.txt
+        get_checksum: yes
+        checksum_algorithm: md5
+      register: sum5
+
+    - set_fact:
+        data: "0"
+      when: sum5.stat.checksum is not defined
+
+    - set_fact:
+        data: "{{ sum5.stat.checksum }}"
+      when: sum5.stat.checksum is defined
+
+
+    - name: "debug"
+      debug:
+        msg: "{{ sum5.stat.checksum }}"
+
+    - name: "[DAVID] - Bloc"
+      block:
+      - name: "[DAVID] - copie du fichier"
+        copy:
+          src: ./monfichier.txt
+          dest: /tmp/david.txt
+
+      - name: "[DAVID] - add line"
+        lineinfile:
+          path: /tmp/david.txt
+          line: "ajout d'une ligne"
+
+      when: data != check5
