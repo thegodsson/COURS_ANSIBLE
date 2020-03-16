@@ -1,0 +1,2 @@
+ansible-playbook -i hosts.yml -u david playbook.yml
+docker exec -ti david-vmparc1 /bin/bash -c cat /tmp/david.txt

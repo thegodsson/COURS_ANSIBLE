@@ -1,0 +1,7 @@
+---
+
+- name: "[WORDPRESS] - install packages"
+  include: install_packages.yml
+
+- name: "[WORDPRESS] - install mysql"
+  include: install_db.yml

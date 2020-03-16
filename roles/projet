@@ -1,0 +1,13 @@
+Etape 1 : Installation wordpress
+	  1) Installation de paquets LAMP
+	  2) Telechargement de sources
+          3) Utilisation de mysql/ansible
+
+
+
+Etape 2 : Tunnig wordpress
+          1) Ajout systeme de cache
+          2) Ajout loadbalancer 
+          3) replication mysql 
+
+

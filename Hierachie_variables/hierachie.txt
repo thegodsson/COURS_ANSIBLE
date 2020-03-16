@@ -1,0 +1,12 @@
+Ansible dispose de plus de 20 types de variables. Voici un petit exemple pour mettre en évidence le fonctionnement de cette hierarchie des variables ansible. Les 10 principales étant à mon sens :
+
+1. extra vars
+2. task vars
+3. block vars
+4. role vars
+5. set_facts
+6. playbook vars
+7. host_vars
+8. inventory vars
+9. group_vars
+10. role defaults vars
