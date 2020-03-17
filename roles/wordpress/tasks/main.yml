@@ -5,3 +5,6 @@
 
 - name: "[WORDPRESS] - install mysql"
   include: install_db.yml
+
+- name: "[WORDPRESS] - install wordpress"
+  include: install_wordpress.yml
