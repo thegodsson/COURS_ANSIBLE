@@ -1,0 +1,47 @@
+---
+
+- name: "[MYSQL] - update cache"
+  apt:
+    update_cache: yes
+  become: yes
+
+- name: "[MYSQL] - install PACKAGES FOR  MYSQL"
+  apt:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  with_items: "{{ mysql_packages }}"
+
+- name: "[MYSQL] - Start mysql"
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  become: yes
+  with_items:
+    - mysql
+
+
+- name: "[MYSQL] - create database"
+  mysql_db:
+    name: "{{ mysql_db }}"
+  become: yes
+
+- name: "[MYSQL] - create user"
+  mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    priv: "*.*:ALL"
+    host: "{{ item }}"
+  become: yes
+  with_items: "{{ groups.apache }}"
+
+
+
+- name: "[MYSQL] - change mycnf"
+  lineinfile:
+    path: /etc/mysql/mariadb.conf.d/50-server.cnf
+    state: absent
+    regexp: '^bind-address'
+    backup: yes
+  notify: restart mysql

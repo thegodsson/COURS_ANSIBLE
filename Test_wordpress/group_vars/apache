@@ -1,0 +1,5 @@
+#variable for mysql
+mysql_db: "wordpress"
+mysql_user: "user1"
+mysql_password: "123456"
+

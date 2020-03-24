@@ -1,0 +1,15 @@
+---
+  - name: "[DAVID] - mysql"
+    hosts: mysql
+    roles:
+      - mysql
+
+  - name: "[DAVID] - Wordpress"
+    hosts: apache
+    roles:
+      - wordpress
+
+  - name: "[DAVID] - Haproxy"
+    hosts: haproxy
+    roles:
+      - haproxy

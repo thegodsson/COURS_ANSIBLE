@@ -1,0 +1,68 @@
+---
+
+- name: "[WORDPRESS] - update cache"
+  apt:
+    update_cache: yes
+
+- name: "[WORDPRESS] - install apache/php" 
+  apt: 
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ wordpress_packages }}"
+
+- name: "[WORDPRESS] - start apache"
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - apache2
+
+
+- name: "[WORDPRESS] - if exist"
+  stat:
+    path: "/var/www/html/wordpress/"
+  register: check_wordpress
+
+- name: "[WORDPRESS] - download tar.gz"
+  unarchive:
+    src: "{{ wordpress_source }}"
+    dest: "/var/www/html/"
+    remote_src: yes
+  when: check_wordpress.stat.exists == False 
+  #run_once: yes
+  #
+  #- name: "[WORDPRESS] - change vhost"
+  #lineinfile:
+  #dest: "/etc/apache2/sites-available/000-default.conf"
+  #regexp: "\tDocumentRoot /var/www/html"
+  #line: "\tDocumentRoot /var/www/html/wordpress"
+  #notify: restart apache
+
+- name: "[WORDPRESS] - index.html"
+  file:
+    path: "/var/www/html/index.html"
+    state: absent
+
+
+- name: "[WORDPRESS] - check if exist"
+  stat:
+    path: "/var/www/html/wordpress/wp-config-sample.php"
+  register: check_sample
+
+- name: "[INSTALL WORDPRESS] - rename wp-config-sample.php"
+  command: mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+  when: check_sample.stat.exists == True
+
+- name: "[INSTALL WORDPRESS] - modify wp-config.php"
+  replace:
+    path: "/var/www/html/wordpress/wp-config.php"
+    path: "{{ item.path }}"
+    regexp: "{{ item.regexp1 }}"
+    replace: "{{ item.replace }}"
+  with_items:
+    - { path: '/var/www/html/wordpress/wp-config.php', regexp1: 'database_name_here', replace: '{{ mysql_db }}'}
+    - { path: '/var/www/html/wordpress/wp-config.php', regexp1: 'username_here', replace: '{{ mysql_user }}'}
+    - { path: '/var/www/html/wordpress/wp-config.php', regexp1: 'password_here', replace: '{{ mysql_password }}'}
+    - { path: '/var/www/html/wordpress/wp-config.php', regexp1: 'localhost', replace: '{{ mysql_host }}'}
+

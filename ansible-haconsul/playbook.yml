@@ -1,0 +1,17 @@
+---
+
+  - name: "[HAPROXY] - role to install haproxy"
+    hosts: haproxy
+    become: yes
+    roles:
+      - haproxy
+    tags:
+      - haproxy
+
+  - name: "[CONSUL] - role to install consul"
+    hosts: consul
+    become: yes
+    roles:
+      - consul
+    tags:
+      - consul

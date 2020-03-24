@@ -1,0 +1,10 @@
+---
+#  - name: "[DAVID] - mysql"
+#    hosts: mysql
+#    roles:
+#      - mysql
+
+  - name: "[DAVID] - Wordpress"
+    hosts: apache
+    roles:
+      - wordpress

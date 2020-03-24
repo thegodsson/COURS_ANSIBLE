@@ -4,4 +4,5 @@ RUN apt-get update \
 && apt-get install -y vim openssh-server sudo python3 \
 && apt-get remove -y systemd \
 && apt-get clean \
-&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+&& ln -s /usr/bin/python3 /usr/bin/python
